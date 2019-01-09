@@ -15,4 +15,9 @@ Does creating concurrent programs make the programmer's life easier or harder?
     Testing in general relies on the idea that a program is deterministic, that if the program executes correctly once, it will execute correctly in the future. For single-threaded programs in general this is close to correct, as the OS often creates a nice cushion for hardware faults, and execution happens within a controlled environment.
     Concurrency introduces an element of timing, and exposes the program to details in hardware. If your tests are very consitent, that might even be a weakness, as external load on the computer might cause issues with timing that consitent tests do not expose.
 
- 
+What are the differences between processes, threads, green threads and coroutines.
+    A process is an instance of a program being executed, that is a finite set of threads being executed concurrently. In general this is a construct by the computer to create a root for these various routines. If the process terminates the OS will clean up any remaining threads tied to the process and free any leftover memory.
+    A thread is a series of operations managed by the OS to run concurrently to other programs. The OS does not in general care about the structure of the internals of the thread, but attempts to schedule the thread in a "fair" way.
+    A Green thread is a "thread within a thread" That is a thread that is controlled by a library instead of the OS. For example a virtual machine may run on a single thread per core but schedule hundreds of different green threads on each lower level thread. Java runs on a virtual machines, so threads created in Java are in general green threads.
+    Coroutines are constructs that allow for scheduling of tasks over time. In a way they are threads running concurrently (not paralell) that wait for an external trigger to resume or terminate operations. Coroutines may cooperate, and as they run concurrently in a safe way, cooperation does not risk creating a race condition.
+
