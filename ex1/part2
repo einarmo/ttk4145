@@ -26,4 +26,7 @@ Which one of these does pthread_create() (C/POSIX), threading.Thread() (Python),
     Python threads are indeed intended as threads. There exists separate implementations for coroutines. Again any such thread may be a green thread in practice, though natively it is a regular thread.
     Go creates "goroutines" which unsurprisingly is a coroutine.
 
+How does the GIL influence the way python threads behave?
+    The Global Interpreter Lock is essentially a global mutex, which python requires for its threads. It essentially means that only a single python thread may access the interpreted python code at a time, which creates a heavy bottleneck for threaded programs and makes paralellism much harder to implement in python. You'll often find that python programs which require paralellism use non-python or external processes to handle paralellism.
+
 
