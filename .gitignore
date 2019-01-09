@@ -1,0 +1,8 @@
+# C-specific files
+*.o
+
+# Compiled files
+/ex1/part4/c/foo
+
+# Linux files
+*.swap
