@@ -1,37 +1,78 @@
 What is concurrency? What is paralellism? What is the difference?
-    Both involve a way of scheduling processes so that they run at the same time. The difference is in how they do it. Concurrency is running multiple processes on a single physical core, switching between processes rapidly to give an illusion of simultaneity.
+    Both involve a way of scheduling processes so that they run at the same time. 
+    The difference is in how they do it. Concurrency is running multiple processes on a single physical core,
+    switching between processes rapidly to give an illusion of simultaneity.
     Paralellism runs two processes on two different cores, and so the processes may run simultaneously in a greater sense.
-    For a higher level programmer there is often little difference between the two. (Case in point, a modern virtual computer may have virtual cores not corresponding to physical cores at all). The practical difference ends up being core-exclusive cache and locality.
+    For a higher level programmer there is often little difference between the two.
+    (Case in point, a modern virtual computer may have virtual cores not corresponding to physical cores at all).
+    The practical difference ends up being core-exclusive cache and locality.
 
 Why have machines become increasingly multicore in the last decade?
-    For a while we were able to double processor speeds every 18 months. A few decades ago, however, we found that reducing the size of transistors or improving pipelining becaome increasingly impossible. To keep increasing effective processing speed, paralellism is one viable solution, and because of this Moore's law technically still holds.
+    For a while we were able to double processor speeds every 18 months.
+    A few decades ago, however, we found that reducing the size of transistors or improving pipelining becaome increasingly impossible.
+    To keep increasing effective processing speed, paralellism is one viable solution,
+    and because of this Moore's law technically still holds.
 
 What kind of problems motivates the need for concurrent execution?
-    Concurrency helps in splitting execution of real time processes in a logical manner. It allows us to transform a program from a constant monitor, to a series of "tasks" triggered by the OS. It allows a greater degree of separation of different logical parts of a program.
-    Even more essentially, it allows us to run multiple programs at the same time at all. Without any concurrency, a computer would only be able to run a number of processes equal to the number of physical cores. A modern personal computer might have 4-8 physical cores, yet any OS has hundreds of small tasks and checks to run in the background. Without any concurrency this would be incredibly difficult to handle in any reasonable fashion. With concurrency these processes may all run independently
+    Concurrency helps in splitting execution of real time processes in a logical manner.
+    It allows us to transform a program from a constant monitor, to a series of "tasks" triggered by the OS.
+    It allows a greater degree of separation of different logical parts of a program.
+    Even more essentially, it allows us to run multiple programs at the same time at all. Without any concurrency,
+    a computer would only be able to run a number of processes equal to the number of physical cores.
+    A modern personal computer might have 4-8 physical cores,
+    yet any OS has hundreds of small tasks and checks to run in the background.
+    Without any concurrency this would be incredibly difficult to handle in any reasonable fashion.
+    With concurrency these processes may all run independently
 
 Does creating concurrent programs make the programmer's life easier or harder?
-    It is somewhat a matter of opinion, but the lesson you often hear of paralellism in particular is that a program might in theory get a massive 50% or greater boost to performance by implementing paralellism, however paralellism or concurrency often introduces inconsistent bugs, which is the bane of any developer as they exponentially increase the complexity of testing.
-    Testing in general relies on the idea that a program is deterministic, that if the program executes correctly once, it will execute correctly in the future. For single-threaded programs in general this is close to correct, as the OS often creates a nice cushion for hardware faults, and execution happens within a controlled environment.
-    Concurrency introduces an element of timing, and exposes the program to details in hardware. If your tests are very consitent, that might even be a weakness, as external load on the computer might cause issues with timing that consitent tests do not expose.
+    It is somewhat a matter of opinion, but the lesson you often hear of paralellism in particular
+    is that a program might in theory get a massive 50% or greater boost to performance by implementing
+    paralellism, however paralellism or concurrency often introduces inconsistent bugs, which is the bane
+    of any developer as they exponentially increase the complexity of testing.
+    Testing in general relies on the idea that a program is deterministic, that if the program executes
+    correctly once, it will execute correctly in the future. For single-threaded programs in general
+    this is close to correct, as the OS often creates a nice cushion for hardware faults,
+    and execution happens within a controlled environment.
+    Concurrency introduces an element of timing, and exposes the program to details in hardware.
+    If your tests are very consitent, that might even be a weakness, as external load on the computer
+    might cause issues with timing that consitent tests do not expose.
 
 What are the differences between processes, threads, green threads and coroutines.
-    A process is an instance of a program being executed, that is a finite set of threads being executed concurrently. In general this is a construct by the computer to create a root for these various routines. If the process terminates the OS will clean up any remaining threads tied to the process and free any leftover memory.
-    A thread is a series of operations managed by the OS to run concurrently to other programs. The OS does not in general care about the structure of the internals of the thread, but attempts to schedule the thread in a "fair" way.
-    A Green thread is a "thread within a thread" That is a thread that is controlled by a library instead of the OS. For example a virtual machine may run on a single thread per core but schedule hundreds of different green threads on each lower level thread. Java runs on a virtual machines, so threads created in Java are in general green threads.
-    Coroutines are constructs that allow for scheduling of tasks over time. In a way they are threads running concurrently (not paralell) that wait for an external trigger to resume or terminate operations. Coroutines may cooperate, and as they run concurrently in a safe way, cooperation does not risk creating a race condition.
+    A process is an instance of a program being executed, that is a finite set of threads being executed concurrently.
+    In general this is a construct by the computer to create a root for these various routines.
+    If the process terminates the OS will clean up any remaining threads tied to the process and free any leftover memory.
+    A thread is a series of operations managed by the OS to run concurrently to other programs.
+    The OS does not in general care about the structure of the internals of the thread,
+    but attempts to schedule the thread in a "fair" way.
+    A Green thread is a "thread within a thread" That is a thread that is controlled by a library instead of the OS.
+    For example a virtual machine may run on a single thread per core but schedule hundreds of different green threads
+    on each lower level thread. Java runs on a virtual machines, so threads created in Java are in general green threads.
+    Coroutines are constructs that allow for scheduling of tasks over time.
+    In a way they are threads running concurrently (not paralell) that wait for an external trigger to resume or
+    terminate operations. Coroutines may cooperate, and as they run concurrently in a safe way,
+    cooperation does not risk creating a race condition.
 
 Which one of these does pthread_create() (C/POSIX), threading.Thread() (Python), go (Go) create?
-    Posix threads are absolutely threads. In theory posix threads are less of an actual implementation and more of a design "execution model" that is independent of language. As such they may be both threads and green threads, though this holds in general, as any language can run within a virtual machine without any knowledge of it.
-    Python threads are indeed intended as threads. There exists separate implementations for coroutines. Again any such thread may be a green thread in practice, though natively it is a regular thread.
+    Posix threads are absolutely threads. In theory posix threads are less of an actual implementation
+    and more of a design "execution model" that is independent of language. As such they may be both threads
+    and green threads, though this holds in general, as any language can run within a virtual machine without any knowledge of it.
+    Python threads are indeed intended as threads. There exists separate implementations for coroutines.
+    Again any such thread may be a green thread in practice, though natively it is a regular thread.
     Go creates "goroutines" which unsurprisingly is a coroutine.
 
 How does the GIL influence the way python threads behave?
-    The Global Interpreter Lock is essentially a global mutex, which python requires for its threads. It essentially means that only a single python thread may access the interpreted python code at a time, which creates a heavy bottleneck for threaded programs and makes paralellism much harder to implement in python. You'll often find that python programs which require paralellism use non-python or external processes to handle paralellism.
+    The Global Interpreter Lock is essentially a global mutex, which python requires for its threads.
+    It essentially means that only a single python thread may access the interpreted python code at a time,
+    which creates a heavy bottleneck for threaded programs and makes paralellism much harder to implement in python.
+    You'll often find that python programs which require paralellism use non-python or external processes to handle paralellism.
 
 With this in mind: What is the workaround for the GIL?
-    There are multiple ways to avoid the GIL. You might use a python implementation with the GIL at all, though this creates its own issues (the GIL exists for a reason). Using message queues to separate different practical parts of the program is a common solution, though it does have its limitations.
-    In general, there is no perfect workaround for the GIL, though a clever programmer might design his program with little memory interaction between threads, for example using messages.
+    There are multiple ways to avoid the GIL. You might use a python implementation with the GIL at all,
+    though this creates its own issues (the GIL exists for a reason). Using message queues to separate different
+    practical parts of the program is a common solution, though it does have its limitations.
+    In general, there is no perfect workaround for the GIL, though a clever programmer might design his program
+    with little memory interaction between threads, for example using messages.
 
 What does func GOMAXPROCS(int n) int change?
-    GOMAXPROCS is somewhat self explanatory. In Go it increases the number of operating system threads a go program can run simultaneously. Increasing this allows Go further potential paralellism and concurrency.
+    GOMAXPROCS is somewhat self explanatory. In Go it increases the number of operating system
+    threads a go program can run simultaneously. Increasing this allows Go further potential paralellism and concurrency.
