@@ -10,4 +10,9 @@ What kind of problems motivates the need for concurrent execution?
     Concurrency helps in splitting execution of real time processes in a logical manner. It allows us to transform a program from a constant monitor, to a series of "tasks" triggered by the OS. It allows a greater degree of separation of different logical parts of a program.
     Even more essentially, it allows us to run multiple programs at the same time at all. Without any concurrency, a computer would only be able to run a number of processes equal to the number of physical cores. A modern personal computer might have 4-8 physical cores, yet any OS has hundreds of small tasks and checks to run in the background. Without any concurrency this would be incredibly difficult to handle in any reasonable fashion. With concurrency these processes may all run independently
 
+Does creating concurrent programs make the programmer's life easier or harder?
+    It is somewhat a matter of opinion, but the lesson you often hear of paralellism in particular is that a program might in theory get a massive 50% or greater boost to performance by implementing paralellism, however paralellism or concurrency often introduces inconsistent bugs, which is the bane of any developer as they exponentially increase the complexity of testing.
+    Testing in general relies on the idea that a program is deterministic, that if the program executes correctly once, it will execute correctly in the future. For single-threaded programs in general this is close to correct, as the OS often creates a nice cushion for hardware faults, and execution happens within a controlled environment.
+    Concurrency introduces an element of timing, and exposes the program to details in hardware. If your tests are very consitent, that might even be a weakness, as external load on the computer might cause issues with timing that consitent tests do not expose.
 
+ 
