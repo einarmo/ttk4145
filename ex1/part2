@@ -32,3 +32,6 @@ How does the GIL influence the way python threads behave?
 With this in mind: What is the workaround for the GIL?
     There are multiple ways to avoid the GIL. You might use a python implementation with the GIL at all, though this creates its own issues (the GIL exists for a reason). Using message queues to separate different practical parts of the program is a common solution, though it does have its limitations.
     In general, there is no perfect workaround for the GIL, though a clever programmer might design his program with little memory interaction between threads, for example using messages.
+
+What does func GOMAXPROCS(int n) int change?
+    GOMAXPROCS is somewhat self explanatory. In Go it increases the number of operating system threads a go program can run simultaneously. Increasing this allows Go further potential paralellism and concurrency.
