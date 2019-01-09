@@ -1,0 +1,5 @@
+What is concurrency? What is paralellism? What is the difference?
+    Both involve a way of scheduling processes so that they run at the same time. The difference is in how they do it. Concurrency is running multiple processes on a single physical core, switching between processes rapidly to give an illusion of simultaneity.
+    Paralellism runs two processes on two different cores, and so the processes may run simultaneously in a greater sense.
+    For a higher level programmer there is often little difference between the two. (Case in point, a modern virtual computer may have virtual cores not corresponding to physical cores at all). The practical difference ends up being core-exclusive cache and locality.
+
