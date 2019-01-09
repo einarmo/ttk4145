@@ -6,4 +6,8 @@ What is concurrency? What is paralellism? What is the difference?
 Why have machines become increasingly multicore in the last decade?
     For a while we were able to double processor speeds every 18 months. A few decades ago, however, we found that reducing the size of transistors or improving pipelining becaome increasingly impossible. To keep increasing effective processing speed, paralellism is one viable solution, and because of this Moore's law technically still holds.
 
+What kind of problems motivates the need for concurrent execution?
+    Concurrency helps in splitting execution of real time processes in a logical manner. It allows us to transform a program from a constant monitor, to a series of "tasks" triggered by the OS. It allows a greater degree of separation of different logical parts of a program.
+    Even more essentially, it allows us to run multiple programs at the same time at all. Without any concurrency, a computer would only be able to run a number of processes equal to the number of physical cores. A modern personal computer might have 4-8 physical cores, yet any OS has hundreds of small tasks and checks to run in the background. Without any concurrency this would be incredibly difficult to handle in any reasonable fashion. With concurrency these processes may all run independently
+
 
