@@ -29,4 +29,6 @@ Which one of these does pthread_create() (C/POSIX), threading.Thread() (Python),
 How does the GIL influence the way python threads behave?
     The Global Interpreter Lock is essentially a global mutex, which python requires for its threads. It essentially means that only a single python thread may access the interpreted python code at a time, which creates a heavy bottleneck for threaded programs and makes paralellism much harder to implement in python. You'll often find that python programs which require paralellism use non-python or external processes to handle paralellism.
 
-
+With this in mind: What is the workaround for the GIL?
+    There are multiple ways to avoid the GIL. You might use a python implementation with the GIL at all, though this creates its own issues (the GIL exists for a reason). Using message queues to separate different practical parts of the program is a common solution, though it does have its limitations.
+    In general, there is no perfect workaround for the GIL, though a clever programmer might design his program with little memory interaction between threads, for example using messages.
