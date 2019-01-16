@@ -72,7 +72,7 @@ void WorkerThread::process() {
                 const string* data = static_cast<const string*>(msg->msg);
                 cout << "Received: " << *data << " on thread " << THREAD_NAME << endl;
                 delete msg;
-                this_thread::sleep_for(1s);
+                this_thread::sleep_for(0.2s);
                 break;
             }
             default:

@@ -1,5 +1,6 @@
 #include <iostream>
-#include "TestThread.h"
+#include <sstream>
+#include "WorkerThread.h"
 
 using namespace std;
 
@@ -17,7 +18,15 @@ int main() {
     testThread2.postMessage(2, &msg1);
     testThread1.postMessage(2, &msg2);
     testThread2.postMessage(2, &msg3);
+    
+    string* arr = new string[10];
 
+    for (int i = 0; i < 10; i++) {
+        std::stringstream msg;
+        msg << "Hello world: " << i;
+        arr[i] = msg.str();
+        testThread1.postMessage(2, &arr[i]);
+    }
     this_thread::sleep_for(1s);
     testThread1.exitThread();
     testThread2.exitThread();
