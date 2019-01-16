@@ -1,14 +1,19 @@
 What if the software controlling one of the elevators suddenly crashes?
-    Some sort of watchdog program. I had an idea of a master-slave system of threads so you'd have some sort of monitoring from the master thread. If the master thread crashes then you'd need some sort of watchdog program to ensure that it closed in a reasonable way.
+    Some sort of watchdog program. I had an idea of a master-slave system of threads so you'd have
+    some sort of monitoring from the master thread. If the master thread crashes then you'd
+    need some sort of watchdog program to ensure that it closed in a reasonable way.
 
 What if it doesn't crash but hangs?
-    The individual threads don't change much. You simply need to ensure that you clean up old threads when one doesn't respond. The master program is much harder, again a watchdog might work. It probably needs tiers of signaling, from SIGTERM to SIGKILL.
+    The individual threads don't change much. You simply need to ensure that you clean up
+    old threads when one doesn't respond. The master program is much harder,
+    again a watchdog might work. It probably needs tiers of signaling, from SIGTERM to SIGKILL.
 
 What if a message between machines is lost?
     Require response. If it fails a number of times then the network connection is cut.
 
 What if a network cable is disconnected? Then reconnected?
-    At the first disconnect we lose control of slave machines, we have a hard time differentiating between a disconnected cable and a permanently crashed machine.
+    At the first disconnect we lose control of slave machines, we have a hard time
+    differentiating between a disconnected cable and a permanently crashed machine.
     The slave might request a connection to the master, in which case we create another control thread.
 
 What if a user of the system is being a troll?

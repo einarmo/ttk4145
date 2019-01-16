@@ -9,7 +9,8 @@ What is concurrency? What is paralellism? What is the difference?
 
 Why have machines become increasingly multicore in the last decade?
     For a while we were able to double processor speeds every 18 months.
-    A few decades ago, however, we found that reducing the size of transistors or improving pipelining becaome increasingly impossible.
+    A few decades ago, however, we found that reducing the size of transistors
+    or improving pipelining becaome increasingly impossible.
     To keep increasing effective processing speed, paralellism is one viable solution,
     and because of this Moore's law technically still holds.
 
@@ -56,7 +57,7 @@ Which one of these does pthread_create() (C/POSIX), threading.Thread() (Python),
     Posix threads are absolutely threads. In theory posix threads are less of an actual implementation
     and more of a design "execution model" that is independent of language. As such they may be both threads
     and green threads, though this holds in general, as any language can run within a virtual machine without any knowledge of it.
-    Python threads are indeed intended as threads. There exists separate implementations for coroutines.
+    Python threads are indeed intended as green threads. There exists separate implementations for coroutines.
     Again any such thread may be a green thread in practice, though natively it is a regular thread.
     Go creates "goroutines" which unsurprisingly is a coroutine.
 
