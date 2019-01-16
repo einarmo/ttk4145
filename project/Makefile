@@ -1,0 +1,24 @@
+CC = g++
+
+CFLAGS = 
+SRC = elevator.cpp WorkerThread.cpp TestThread.cpp
+LDFLAGS = -pthread
+
+TARGET = elevator
+
+all: $(TARGET)
+
+OBJ = $(SRC:.c=.o)
+
+$(TARGET): $(OBJ)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJ)
+
+rebuild:	clean all
+
+.PHONY: all rebuild clean
