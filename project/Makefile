@@ -1,7 +1,7 @@
 CC = g++
 
 CFLAGS = 
-SRC = elevator.cpp Message.cpp Queue.cpp
+SRC = elevator.cpp Message.cpp Queue.cpp BaseThread.cpp TestThread.cpp
 LDFLAGS = -pthread
 
 TARGET = elevator
