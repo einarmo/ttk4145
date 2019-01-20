@@ -44,6 +44,8 @@ int main() {
         cout << "Send message: " << text << endl;
         receiver.getQueue().put(DataMessage<string>(MSG_STRING_DATA, text));
     }
+    this_thread::sleep_for(3s);
+    receiver.getQueue().put(DataMessage<string>(MSG_STRING_DATA, "Last message"));
     receiver.getQueue().put(Message(MSG_EXIT_THREAD));
     receiver.join();
     return 0;

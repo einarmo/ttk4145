@@ -1,0 +1,37 @@
+What is an atomic operation?
+    An operation is atomic if its possible outcomes are fixed, generally
+    either success or failure.
+What is a semaphore?
+    A semaphore is a system to access a variable designed to ensure that the value
+    is only accessed from a single place at a time. It generally works by recording
+    the number of availbable resources and incrementing or decrementing as it is
+    claimed or freed.
+What is a mutex?
+    A mutex or "mutual exclusion" is a variable that can be locked only by a single
+    thread at any point. Only one thread at a time can lock a given mutex at any point in time.
+    Other threads can wait until the mutex is unlocked before locking it itself.
+    So a mutex locks access to a specific piece of code.
+What is the difference between a mutex and a binary semaphore?
+    The difference is in ownership. A mutex is owned and controlled entirely by the
+    thread that first locked it, while a semaphore can be signaled from other places, and is
+    not really related to code.
+    So a mutex locks a piece or several pieces of code to a single thread at a time, and
+    a semaphore restricts the number of threads that can access a piece of data at a time.
+What is a critical section?
+    A critical section is the area of code locked by a mutex, that only a single thread can
+    access at a time.
+What is the difference between race conditions and data races.
+    A race condition is a more general sort of memory conflict, basically any conflict
+    caused by asynchronous operation, that is non-determinism caused by other parts of the
+    operating system or hardware.
+    A data race is a special case that involves two different systems writing data to a 
+    single place in memory at the same time.
+List some advantages of using message passing over lock-based synchronization primitives.
+    Message passing is good at preventing race conditions, since it allows complete separation
+    of different threads. The goal then is to separate the memory accessed by threads entirely
+    and give them a single common point in the message queue.
+List some advantages of using lock-based synchronization primitives over message passing.
+    It allows a greater amount of data to be shared between threads, and it is quicker as
+    it generally involves only minor synchronization. It allows for a much larger number
+    of threads, which would be difficult using a message queue.
+    
