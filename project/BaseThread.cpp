@@ -4,7 +4,7 @@
 using namespace std;
 
 BaseThread::BaseThread(const string name)
-    : mthread(0), THREAD_NAME(name) {}
+    : mthread(), THREAD_NAME(name) {}
 
 BaseThread::~BaseThread() {
     exitThread();
@@ -19,7 +19,7 @@ void BaseThread::exitThread() {
 
 bool BaseThread::createThread() {
     if (mthread) return true;
-    mthread = new thread(&BaseThread::process, this);
+    mthread = unique_ptr<thread>(new thread(&BaseThread::process, this));
     return true;
 }
 

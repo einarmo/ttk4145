@@ -24,8 +24,8 @@ class BaseThread {
         void process();
     private:
 
-        thread* mthread;
-        
+        unique_ptr<thread> mthread;
+
         Queue mqueue;
 
         const string THREAD_NAME;

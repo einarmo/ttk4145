@@ -1,4 +1,6 @@
-
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 #include "Message.hpp"
 #include <memory>
 
@@ -12,13 +14,11 @@ class Queue {
         ~Queue();
 
         void put(Message&& msg);
-        
-        unique_ptr<Message> get(int timeoutms = 0);
 
-        unique_ptr<Message> request(Message&& msg);
-        
-        void respondTo(MsgUID reqUid, Message&& responseMsg);
+        unique_ptr<Message> get(int timeoutms = 0);
     private:
-        class Implement;
-        unique_ptr<Implement> implement;
+        queue<unique_ptr<Message>> mQueue;
+        mutex queueMutex;
+
+        condition_variable queueCV;
 };
