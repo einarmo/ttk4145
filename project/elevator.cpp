@@ -1,4 +1,5 @@
 #include "TestThread.hpp"
+#include "Scheduler.hpp"
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -35,7 +36,7 @@ int main() {
     t3.join();
     t4.join(); */
 
-    TestThread receiver("RecThread");
+/*    TestThread receiver("RecThread");
     receiver.createThread();
     for (int i = 0; i < 20; i++) {
         stringstream ss;
@@ -47,6 +48,19 @@ int main() {
     this_thread::sleep_for(3s);
     receiver.getQueue().put(DataMessage<string>(MSG_STRING_DATA, "Last message"));
     receiver.getQueue().put(Message(MSG_EXIT_THREAD));
-    receiver.join();
+    receiver.join(); */
+    Scheduler sch;
+    sch.start();
+    int i = 0;
+    cout << "Declare scheduler" << endl;
+    sch.scheduleEvery(500ms, []{
+        cout << "Trigger infrequent" << endl;
+    });
+    this_thread::sleep_for(100ms);
+    sch.scheduleEvery(300ms, []{
+        cout << "Trigger frequent" << endl;
+    });
+    this_thread::sleep_for(3s);
+    sch.stop();
     return 0;
 }

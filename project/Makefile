@@ -1,7 +1,7 @@
 CC = g++
 
 CFLAGS = 
-SRC = elevator.cpp Message.cpp Queue.cpp BaseThread.cpp TestThread.cpp
+SRC = elevator.cpp Message.cpp Queue.cpp BaseThread.cpp TestThread.cpp Scheduler.cpp
 LDFLAGS = -pthread -fsanitize=thread -g
 
 TARGET = elevator
