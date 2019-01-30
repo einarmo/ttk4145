@@ -21,7 +21,7 @@ func decrementing() {
 }
 
 func main() {
-    runtime.GOMAXPROCS(runtime.NumCPU() - 1)    // I guess this is a hint to what GOMAXPROCS does...
+    runtime.GOMAXPROCS(runtime.NumCPU())    // I guess this is a hint to what GOMAXPROCS does...
     go incrementing()
     go decrementing()
     // We have no way to wait for the completion of a goroutine (without additional syncronization of some sort)

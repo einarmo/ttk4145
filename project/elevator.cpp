@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-/*    cout << "Hello world!" << endl;
+/*  cout << "Hello world!" << endl;
     Queue q;
     auto sender = [](int msgId, int count, Queue& q) {
         for (int i = 0; i < count; i++) {

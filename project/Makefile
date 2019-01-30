@@ -2,7 +2,7 @@ CC = g++
 
 CFLAGS = 
 SRC = elevator.cpp Message.cpp Queue.cpp BaseThread.cpp TestThread.cpp
-LDFLAGS = -pthread
+LDFLAGS = -pthread -fsanitize=thread -g
 
 TARGET = elevator
 

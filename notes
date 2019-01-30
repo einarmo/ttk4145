@@ -1,0 +1,58 @@
+APIer:
+	UDP-basert kommunikasjon
+	Messagequeue system
+
+Moduler:
+	Kontrollmodul
+		/synkronisering
+		Tar beslutninger
+		F:
+			handleMessage(Message msg)
+			getScores()
+			init()
+			addPeer()
+			removePeer()
+	Hardwaremodul
+		Skriver til hardware
+		F:
+			setLights()
+			setElevator()
+	Monitormodul
+		Følger med på hardware (knapper, sensorer osv.)
+		Sender hendelser til kontrollmodul
+			Inaktiv knapp trykkes på
+			Sensor deaktiveres
+			Sensor aktiveres
+		F:
+			checkLoop() // Reads hardware 100 times a second, post events to control
+	Mottakermodul
+		Mottar meldinger over UDP
+		Tester og behandler meldinger
+		F:
+			listen()
+			validateMessage() ?
+	Sendermodul
+		Sender meldinger over UDP
+		System for timeouts på ack
+		Må kunne takle flere sett med meldinger av gangen
+		F:
+			sendMessage(IMessage msg)
+			setTimeout()
+			validateMessage(IMessage msg)
+	Sysevents modul
+		Lytter til system signaler, terminerer programmet
+		F:
+			signalListener()
+
+Tråder:
+	Mottakertråd
+		For mottakermodulen, mottar meldinger over UDP
+	Monitortråd
+		Lytter på hardware
+		Oversikt over aktiv tilstand
+	Hovedtråd
+		Alt annet
+		Skriving til hardware,
+		Beslutningstakning
+		Sending av meldinger
+		Merk, all varig skriving skjer her
