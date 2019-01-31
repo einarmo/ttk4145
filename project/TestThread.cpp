@@ -12,7 +12,6 @@ void TestThread::handleMessage(Message& msg) {
                 auto& dmsg = dynamic_cast<DataMessage<string>&>(msg);
                 string text = dmsg.getPayload();
                 cout << "Received message: " << text << endl;
-                this_thread::sleep_for(0.1s);
                 break;
             }
         default:

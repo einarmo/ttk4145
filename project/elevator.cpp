@@ -1,5 +1,5 @@
 #include "TestThread.hpp"
-#include "Scheduler.hpp"
+#include "QueueScheduler.hpp"
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -36,31 +36,22 @@ int main() {
     t3.join();
     t4.join(); */
 
-/*    TestThread receiver("RecThread");
+    TestThread receiver("RecThread");
     receiver.createThread();
+    QueueScheduler sch(receiver.getQueue());
+    sch.start();
     for (int i = 0; i < 20; i++) {
         stringstream ss;
         ss << "Message: " << i;
         string text(ss.str());
-        cout << "Send message: " << text << endl;
-        receiver.getQueue().put(DataMessage<string>(MSG_STRING_DATA, text));
+        sch.scheduleIn(100ms * (i+1), DataMessage<string>(MSG_STRING_DATA, text));
     }
+    sch.scheduleIn(200ms, DataMessage<string>(MSG_STRING_DATA, "Extra Message 1"));
+    sch.scheduleIn(500ms, DataMessage<string>(MSG_STRING_DATA, "Extra Message 2"));
     this_thread::sleep_for(3s);
     receiver.getQueue().put(DataMessage<string>(MSG_STRING_DATA, "Last message"));
     receiver.getQueue().put(Message(MSG_EXIT_THREAD));
-    receiver.join(); */
-    Scheduler sch;
-    sch.start();
-    int i = 0;
-    cout << "Declare scheduler" << endl;
-    sch.scheduleEvery(500ms, []{
-        cout << "Trigger infrequent" << endl;
-    });
-    this_thread::sleep_for(100ms);
-    sch.scheduleEvery(300ms, []{
-        cout << "Trigger frequent" << endl;
-    });
-    this_thread::sleep_for(3s);
+    receiver.join();
     sch.stop();
     return 0;
 }

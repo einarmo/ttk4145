@@ -14,6 +14,14 @@ void Queue::put(Message&& msg) {
     queueCV.notify_one();
 }
 
+void Queue::put(unique_ptr<Message> msg) {
+    {
+        lock_guard<mutex> lock(queueMutex);
+        mQueue.push(msg->move());
+    }
+    queueCV.notify_one();
+}
+
 unique_ptr<Message> Queue::get(int timeoutms) {
     unique_lock<mutex> lock(queueMutex);
     if (timeoutms <= 0) {
